@@ -14,7 +14,7 @@ export class Movie {
   @PrimaryGeneratedColumn('uuid')
   movieId: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, unique: true })
   title: string;
 
   @Column({ length: 500 })
