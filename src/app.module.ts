@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigService } from './typeorm-config.service';
@@ -22,7 +20,5 @@ import { AuthenticationModule } from './authentication/authentication.module';
     MoviesModule,
     AuthenticationModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
