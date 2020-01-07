@@ -13,8 +13,8 @@ export class UserRepository extends Repository<User> {
     return this.findOne({ email: email });
   }
 
-  createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.findUserByEmail(createUserDto.email);
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.findUserByEmail(createUserDto.email);
     if (user)
       throw new ConflictException('provided email is already registered');
 
