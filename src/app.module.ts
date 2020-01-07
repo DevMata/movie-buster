@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { TagsModule } from './tags/tags.module';
 import { RolesModule } from './roles/roles.module';
 import { MoviesModule } from './movies/movies.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MoviesModule } from './movies/movies.module';
     TagsModule,
     RolesModule,
     MoviesModule,
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
