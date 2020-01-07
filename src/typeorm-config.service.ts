@@ -8,7 +8,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      type: 'postgres' as 'postgres',
+      type: 'postgres',
       host: this.configService.get('DB_HOST'),
       port: this.configService.get('DB_PORT'),
       database: this.configService.get('DB_NAME'),
@@ -16,6 +16,6 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: this.configService.get('DB_PASS'),
       synchronize: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
-    } as TypeOrmModuleOptions;
+    };
   }
 }
