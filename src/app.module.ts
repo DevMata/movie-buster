@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigService } from './typeorm-config.service';
 import { UsersModule } from './users/users.module';
 import { TagsModule } from './tags/tags.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TagsModule } from './tags/tags.module';
     }),
     UsersModule,
     TagsModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
