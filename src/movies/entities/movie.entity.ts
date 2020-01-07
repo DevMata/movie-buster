@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Tag } from 'src/tags/entities/tag.entity';
 
@@ -43,9 +44,7 @@ export class Movie {
   @UpdateDateColumn()
   modifiedAt: Date;
 
-  @ManyToMany(
-    () => Tag,
-    tag => tag.movies,
-  )
+  @ManyToMany(() => Tag)
+  @JoinTable()
   tags: Tag[];
 }
