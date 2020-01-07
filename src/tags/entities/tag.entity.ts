@@ -4,9 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
 } from 'typeorm';
-import { Movie } from 'src/movies/entities/movie.entity';
 
 @Entity()
 export class Tag {
@@ -21,10 +19,4 @@ export class Tag {
 
   @UpdateDateColumn()
   modifiedAt: Date;
-
-  @ManyToMany(
-    () => Movie,
-    movie => movie.tags,
-  )
-  movies: Movie[];
 }
