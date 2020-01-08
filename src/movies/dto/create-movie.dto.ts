@@ -5,6 +5,8 @@ import {
   IsNumber,
   IsPositive,
   IsCurrency,
+  IsOptional,
+  IsArray,
 } from 'class-validator';
 
 export class CreateMovieDto {
@@ -17,12 +19,12 @@ export class CreateMovieDto {
   description: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsUrl()
+  @IsOptional()
   poster: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @IsUrl()
   trailer: string;
 
@@ -41,4 +43,8 @@ export class CreateMovieDto {
   @IsNumber({ maxDecimalPlaces: 0 })
   @IsPositive()
   stock: number;
+
+  @IsArray()
+  @IsOptional()
+  tags: string[];
 }
