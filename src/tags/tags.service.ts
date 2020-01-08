@@ -1,4 +1,4 @@
-import { Injectable, Get, Post } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TagRepository } from './repositories/tag.repository';
 import { Tag } from './entities/tag.entity';
 import { CreateMultipleTagsDto } from './dto/create-multiple-tags.dto';
@@ -7,12 +7,10 @@ import { CreateMultipleTagsDto } from './dto/create-multiple-tags.dto';
 export class TagsService {
   constructor(private readonly tagRepository: TagRepository) {}
 
-  @Get()
   getTags(): Promise<Array<Tag>> {
     return this.tagRepository.getTags();
   }
 
-  @Post()
   createTags(
     createMultipleTagsDto: CreateMultipleTagsDto,
   ): Promise<Array<Tag>> {
