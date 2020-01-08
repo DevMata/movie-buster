@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, In } from 'typeorm';
 import { Tag } from '../entities/tag.entity';
 import { CreateTagDto } from '../dto/create-tag.dto';
 
@@ -20,5 +20,19 @@ export class TagRepository extends Repository<Tag> {
     if (tag) return tag;
 
     return this.save(createTagDto);
+  }
+
+  async createMultipleTags(tags: Array<string>): Promise<Array<Tag>> {
+    const existingTags = await this.find({ name: In(tags) });
+
+    const existingNames = existingTags.map(tag => tag.name);
+
+    const notSaved = tags
+      .filter(tag => !existingNames.includes(tag))
+      .map(tag => ({ name: tag }));
+
+    const newTags = await this.save(notSaved);
+
+    return [...existingTags, ...newTags];
   }
 }
