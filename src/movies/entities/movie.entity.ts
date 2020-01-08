@@ -26,16 +26,16 @@ export class Movie {
   @Column()
   trailer: string;
 
-  @Column()
+  @Column({ type: 'integer' })
   rentPrince: number;
 
-  @Column()
+  @Column({ type: 'integer' })
   salePrice: number;
 
   @Column({ type: 'integer' })
   stock: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', default: 0 })
   likes: number;
 
   @CreateDateColumn()
