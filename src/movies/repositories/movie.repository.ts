@@ -2,9 +2,14 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Movie } from '../entities/movie.entity';
 import { CreateMovieDto } from '../dto/create-movie.dto';
 import { ConflictException } from '@nestjs/common';
+import { TagRepository } from 'src/tags/repositories/tag.repository';
 
 @EntityRepository(Movie)
 export class MovieRepository extends Repository<Movie> {
+  constructor(private readonly tagRepository: TagRepository) {
+    super();
+  }
+
   findMovieById(movieId: string): Promise<Movie> {
     return this.findOne(movieId);
   }
@@ -19,6 +24,9 @@ export class MovieRepository extends Repository<Movie> {
     if (movie)
       throw new ConflictException('A movie with that title already exists');
 
-    return this.save(createMovieDto);
+    return this.save({
+      ...createMovieDto,
+      tags: await this.tagRepository.createMultipleTags(createMovieDto.tags),
+    });
   }
 }
