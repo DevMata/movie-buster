@@ -30,8 +30,6 @@ export class MoviesService {
 
     const movie = { ...createMovieDto, tags };
 
-    console.log(movie);
-
     return this.movieRepository.save(movie);
   }
 }
