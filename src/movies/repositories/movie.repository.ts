@@ -10,6 +10,10 @@ export class MovieRepository extends Repository<Movie> {
     super();
   }
 
+  getMovies(): Promise<Array<Movie>> {
+    return this.find({ select: ['movieId', 'title', 'description'] });
+  }
+
   findMovieById(movieId: string): Promise<Movie> {
     return this.findOne(movieId);
   }
