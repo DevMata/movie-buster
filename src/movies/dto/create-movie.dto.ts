@@ -2,11 +2,10 @@ import {
   IsString,
   IsNotEmpty,
   IsUrl,
-  IsNumber,
   IsPositive,
-  IsCurrency,
   IsOptional,
   IsArray,
+  IsInt,
 } from 'class-validator';
 
 export class CreateMovieDto {
@@ -18,33 +17,26 @@ export class CreateMovieDto {
   @IsNotEmpty()
   description: string;
 
-  @IsString()
   @IsUrl()
-  @IsOptional()
   poster: string;
 
-  @IsString()
-  @IsOptional()
   @IsUrl()
   trailer: string;
 
-  @IsNumber()
+  @IsInt()
   @IsPositive()
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  @IsCurrency({ allow_decimal: true })
   rentPrice: number;
 
-  @IsNumber()
+  @IsInt()
   @IsPositive()
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  @IsCurrency({ allow_decimal: true })
   salePrice: number;
 
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt()
   @IsPositive()
   stock: number;
 
   @IsArray()
   @IsOptional()
-  tags: string[];
+  @IsNotEmpty({ each: true })
+  tags?: string[];
 }

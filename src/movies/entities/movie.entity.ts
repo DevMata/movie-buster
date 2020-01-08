@@ -8,6 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Tag } from 'src/tags/entities/tag.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity()
 export class Movie {
@@ -26,16 +27,16 @@ export class Movie {
   @Column()
   trailer: string;
 
-  @Column()
-  rentPrince: number;
+  @Column({ type: 'integer' })
+  rentPrice: number;
 
-  @Column()
+  @Column({ type: 'integer' })
   salePrice: number;
 
   @Column({ type: 'integer' })
   stock: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', default: 0 })
   likes: number;
 
   @CreateDateColumn()
@@ -44,7 +45,11 @@ export class Movie {
   @UpdateDateColumn()
   modifiedAt: Date;
 
-  @ManyToMany(() => Tag)
-  @JoinTable()
+  @ManyToMany(() => Tag, { eager: true })
+  @JoinTable({ name: 'movie_tag' })
   tags: Tag[];
+
+  @ManyToMany(() => User)
+  @JoinTable({ name: 'like' })
+  users: User[];
 }
