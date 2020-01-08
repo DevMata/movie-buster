@@ -23,7 +23,11 @@ export class TagRepository extends Repository<Tag> {
   }
 
   async createMultipleTags(tags: Array<string>): Promise<Array<Tag>> {
-    const existingTags = await this.find({ name: In(tags) });
+    //get only unique keys in the array
+    //serialize to lower case
+    const filteredTags = new Set(tags.map(tag => tag.toLowerCase()));
+
+    const existingTags = await this.find({ name: In([...filteredTags]) });
 
     const existingNames = existingTags.map(tag => tag.name);
 
