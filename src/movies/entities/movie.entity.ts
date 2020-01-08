@@ -27,7 +27,7 @@ export class Movie {
   trailer: string;
 
   @Column({ type: 'integer' })
-  rentPrince: number;
+  rentPrice: number;
 
   @Column({ type: 'integer' })
   salePrice: number;
