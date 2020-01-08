@@ -4,6 +4,10 @@ import { CreateTagDto } from '../dto/create-tag.dto';
 
 @EntityRepository(Tag)
 export class TagRepository extends Repository<Tag> {
+  getTags(): Promise<Array<Tag>> {
+    return this.find();
+  }
+
   findTagById(tagId: string): Promise<Tag> {
     return this.findOne(tagId);
   }
