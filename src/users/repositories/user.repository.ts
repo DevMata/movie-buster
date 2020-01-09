@@ -3,6 +3,7 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { Role } from 'src/roles/entities/role.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -26,12 +27,12 @@ export class UserRepository extends Repository<User> {
     });
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto, role: Role): Promise<User> {
     const user = await this.findUserByEmail(createUserDto.email);
     if (user)
       throw new ConflictException('provided email is already registered');
 
-    return this.save(createUserDto);
+    return this.save({ ...createUserDto, role });
   }
 
   async changeUserPassword(
