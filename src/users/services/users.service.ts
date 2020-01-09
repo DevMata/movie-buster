@@ -4,11 +4,13 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { HashHelper } from './hash.helper';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { RoleRepository } from 'src/roles/repositories/roles.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly roleRepository: RoleRepository,
     private readonly hashHelper: HashHelper,
   ) {}
 
@@ -24,11 +26,13 @@ export class UsersService {
     return this.userRepository.findUserById(userId);
   }
 
-  createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const { password } = createUserDto;
     createUserDto.password = this.hashHelper.hash(password);
 
-    return this.userRepository.createUser(createUserDto);
+    const clientRole = await this.roleRepository.findRolebyName('client');
+
+    return this.userRepository.createUser(createUserDto, clientRole);
   }
 
   updateUser(userId: string, updateUserDto: UpdateUserDto): Promise<User> {

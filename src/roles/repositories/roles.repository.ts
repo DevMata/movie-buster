@@ -12,4 +12,8 @@ export class RoleRepository extends Repository<Role> {
       this.save(roles.map(role => ({ name: role })));
     }
   }
+
+  findRolebyName(roleName: string): Promise<Role> {
+    return this.findOne({ name: roleName });
+  }
 }
