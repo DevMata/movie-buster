@@ -16,6 +16,7 @@ export class AuthenticationService {
     @InjectRepository(AccessToken)
     private readonly tokenRepository: Repository<AccessToken>,
   ) {}
+
   async validateUser(email: string, password: string): Promise<UserPayload> {
     const user = await this.usersService.findUserByEmail(email);
     if (user && compareSync(password, user.password)) {
