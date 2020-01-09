@@ -2,14 +2,10 @@ import { EntityRepository, Repository, UpdateResult } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import { HashHelper } from '../services/hash.helper';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  constructor(private readonly hashHelper: HashHelper) {
-    super();
-  }
-
   async findUserById(userId: string): Promise<User> {
     const user = await this.findOne(userId, {
       select: ['name', 'lastname', 'email', 'createdAt', 'updatedAt'],
@@ -35,9 +31,6 @@ export class UserRepository extends Repository<User> {
     if (user)
       throw new ConflictException('provided email is already registered');
 
-    const { password } = createUserDto;
-    createUserDto.password = this.hashHelper.hash(password);
-
     return this.save(createUserDto);
   }
 
@@ -47,6 +40,17 @@ export class UserRepository extends Repository<User> {
   ): Promise<UpdateResult> {
     await this.findUserById(userId);
 
-    return this.update(userId, { password: this.hashHelper.hash(newPassword) });
+    return this.update(userId, { password: newPassword });
+  }
+
+  async updateUser(
+    userId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const user = await this.findOne(userId);
+
+    if (!user) throw new NotFoundException('user not found');
+
+    return this.save({ ...user, ...updateUserDto });
   }
 }
