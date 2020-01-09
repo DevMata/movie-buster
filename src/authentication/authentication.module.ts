@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtConfigService } from './services/jwt-config.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AccessToken } from './entities/token.entity';
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { JwtConfigService } from './services/jwt-config.service';
     JwtModule.registerAsync({
       useClass: JwtConfigService,
     }),
+    TypeOrmModule.forFeature([AccessToken]),
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService, JwtStrategy, LocalStrategy],
-  exports: [AuthenticationService],
+  exports: [AuthenticationService, TypeOrmModule],
 })
 export class AuthenticationModule {}

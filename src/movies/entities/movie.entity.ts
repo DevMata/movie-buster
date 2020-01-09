@@ -8,7 +8,6 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Tag } from 'src/tags/entities/tag.entity';
-import { User } from 'src/users/entities/user.entity';
 
 @Entity()
 export class Movie {
