@@ -1,18 +1,14 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, Post, UseGuards, Req } from '@nestjs/common';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from '@nestjs/passport';
-import { LoggedUser } from 'src/users/decorators/user.decorator';
-import { UserPayload } from './dto/user-payload.dto';
 
-@Controller('login')
+@Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly loginService: AuthenticationService) {}
+  constructor(private readonly authenticationService: AuthenticationService) {}
 
-  @Post('signin')
+  @Post('login')
   @UseGuards(AuthGuard('local'))
-  async login(
-    @LoggedUser() user: UserPayload,
-  ): Promise<{ accessToken: string }> {
-    return this.loginService.login(user);
+  async login(@Req() req): Promise<{ accessToken: string }> {
+    return this.authenticationService.login(req.user);
   }
 }

@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Role } from 'src/roles/entities/role.entity';
+import { Movie } from 'src/movies/entities/movie.entity';
 
 @Entity()
 export class User {
@@ -36,4 +39,8 @@ export class User {
     role => role.users,
   )
   role: Role;
+
+  @ManyToMany(() => Movie, { eager: true })
+  @JoinTable({ name: 'like' })
+  movies: Movie[];
 }

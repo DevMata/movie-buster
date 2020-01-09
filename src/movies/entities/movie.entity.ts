@@ -48,8 +48,4 @@ export class Movie {
   @ManyToMany(() => Tag, { eager: true })
   @JoinTable({ name: 'movie_tag' })
   tags: Tag[];
-
-  @ManyToMany(() => User)
-  @JoinTable({ name: 'like' })
-  users: User[];
 }
