@@ -1,16 +1,15 @@
 import { EntityRepository, Repository, In } from 'typeorm';
 import { Role } from '../entities/role.entity';
-import { Roles } from '../roles.contants';
 
 @EntityRepository(Role)
 export class RoleRepository extends Repository<Role> {
-  async seedRoles(): Promise<void> {
-    const savedRoles = (await this.find({ name: In(Roles) })).map(
+  async seedRoles(roles: string[]): Promise<void> {
+    const savedRoles = (await this.find({ name: In(roles) })).map(
       role => role.name,
     );
 
-    if (!Roles.every(role => savedRoles.includes(role))) {
-      this.save(Roles.map(role => ({ name: role })));
+    if (!roles.every(role => savedRoles.includes(role))) {
+      this.save(roles.map(role => ({ name: role })));
     }
   }
 }
