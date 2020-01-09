@@ -15,6 +15,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { LoggedUser } from 'src/users/decorators/user.decorator';
 import { UserPayload } from 'src/authentication/dto/user-payload.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ValidateTokenGuard } from 'src/authentication/guards/validate-token.guard';
 
 @Controller('movies')
 export class MoviesController {
@@ -44,7 +45,7 @@ export class MoviesController {
   }
 
   @Put(':movieId/like')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), ValidateTokenGuard)
   likeMovie(
     @Param() movieIdDto: MovieIdDto,
     @LoggedUser() user: UserPayload,
