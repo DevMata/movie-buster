@@ -4,14 +4,13 @@ import { Roles } from '../roles.contants';
 
 @EntityRepository(Role)
 export class RoleRepository extends Repository<Role> {
-  async verifyRoles(): Promise<boolean> {
-    const res = await this.findAndCount({ name: In(Roles) });
-
-    return res.length === 2;
-  }
-
   async seedRoles(): Promise<void> {
-    if (await this.verifyRoles()) {
+    const savedRoles = (await this.find({ name: In(Roles) })).map(
+      role => role.name,
+    );
+
+    if (!Roles.every(role => savedRoles.includes(role))) {
+      this.save(Roles.map(role => ({ name: role })));
     }
   }
 }
