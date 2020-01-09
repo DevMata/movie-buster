@@ -12,7 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from '../dto/token-payload.dto';
 
 @Injectable()
-export class ValidateTokenGuard implements CanActivate {
+export class TokenGuard implements CanActivate {
   constructor(
     @InjectRepository(AccessToken)
     private readonly tokenRepository: Repository<AccessToken>,
