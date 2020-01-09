@@ -15,7 +15,9 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { LoggedUser } from 'src/users/decorators/user.decorator';
 import { UserPayload } from 'src/authentication/dto/user-payload.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ValidateTokenGuard } from 'src/authentication/guards/validate-token.guard';
+import { TokenGuard } from 'src/authentication/guards/token.guard';
+import { Roles } from 'src/authentication/decorators/role.decorator';
+import { RoleGuard } from 'src/authentication/guards/role.guard';
 
 @Controller('movies')
 export class MoviesController {
@@ -32,6 +34,8 @@ export class MoviesController {
   }
 
   @Post()
+  @Roles('admin')
+  @UseGuards(AuthGuard('jwt'), TokenGuard, RoleGuard)
   createMovie(@Body() createMovieDto: CreateMovieDto): Promise<Movie> {
     return this.moviesService.createMovie(createMovieDto);
   }
@@ -45,7 +49,7 @@ export class MoviesController {
   }
 
   @Put(':movieId/like')
-  @UseGuards(AuthGuard('jwt'), ValidateTokenGuard)
+  @UseGuards(AuthGuard('jwt'), TokenGuard)
   likeMovie(
     @Param() movieIdDto: MovieIdDto,
     @LoggedUser() user: UserPayload,
