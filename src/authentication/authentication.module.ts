@@ -22,6 +22,6 @@ import { AccessToken } from './entities/token.entity';
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService, JwtStrategy, LocalStrategy],
-  exports: [AuthenticationService, TypeOrmModule],
+  exports: [AuthenticationService, TypeOrmModule, JwtModule],
 })
 export class AuthenticationModule {}
