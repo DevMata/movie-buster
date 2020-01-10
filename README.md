@@ -32,4 +32,5 @@ This API is built in NestJS framework with Typescript. It allows to handle a mov
 
 ## Documentation
 
-More examples of use cases of this API can be founded [here](https://documenter.getpostman.com/view/9673662/SWLh77wL?version=latest)
+More examples of use cases of this API can be found
+<a href="https://documenter.getpostman.com/view/9673662/SWLh77wL?version=latest" target="blank">here</a>
