@@ -16,8 +16,8 @@ const mockTagRepository = () => ({
 });
 
 describe('TagsService', () => {
-  let tagsService: TagsService;
-  let tagRepository: TagRepository;
+  let tagsService;
+  let tagRepository;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -62,22 +62,28 @@ describe('TagsService', () => {
   });
 
   describe('create tag', () => {
-    it('create a tag', () => {
+    it('create a tag', async () => {
+      (tagRepository.createTag as jest.Mock).mockResolvedValue('some value');
       expect(tagRepository.createTag).not.toHaveBeenCalled();
 
-      tagRepository.createTag(mocktagdto);
+      const res = await tagRepository.createTag(mocktagdto);
 
       expect(tagRepository.createTag).toHaveBeenCalled();
+      expect(res).toEqual('some value');
     });
   });
 
   describe('create multiple tags', () => {
-    it('create multiple tags', () => {
+    it('create multiple tags', async () => {
+      (tagRepository.createMultipleTags as jest.Mock).mockResolvedValue(
+        'some value',
+      );
       expect(tagRepository.createMultipleTags).not.toHaveBeenCalled();
 
-      tagRepository.createMultipleTags(['horror', 'scifi']);
+      const res = await tagRepository.createMultipleTags(['horror', 'scifi']);
 
       expect(tagRepository.createMultipleTags).toHaveBeenCalled();
+      expect(res).toEqual('some value');
     });
   });
 });
