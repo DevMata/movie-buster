@@ -5,6 +5,7 @@ import {
   IsUrl,
   IsInt,
   IsPositive,
+  IsArray,
 } from 'class-validator';
 
 export class UpdateMovieDto {
@@ -40,4 +41,9 @@ export class UpdateMovieDto {
   @IsInt()
   @IsPositive()
   stock: number;
+
+  @IsOptional()
+  @IsString({ each: true })
+  @IsArray()
+  tags?: string[];
 }
