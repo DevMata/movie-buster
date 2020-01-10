@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   ManyToOne,
+  Column,
 } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Movie } from 'src/movies/entities/movie.entity';
@@ -14,6 +15,9 @@ export class Rent {
 
   @CreateDateColumn()
   rentedAt: Date;
+
+  @Column({ default: 'pending' })
+  status: string;
 
   @ManyToOne(
     () => User,
