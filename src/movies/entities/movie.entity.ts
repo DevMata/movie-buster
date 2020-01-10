@@ -8,6 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Tag } from 'src/tags/entities/tag.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity()
 export class Movie {
@@ -47,4 +48,10 @@ export class Movie {
   @ManyToMany(() => Tag, { eager: true })
   @JoinTable({ name: 'movie_tag' })
   tags: Tag[];
+
+  @ManyToMany(
+    () => User,
+    user => user.movies,
+  )
+  users: User[];
 }
