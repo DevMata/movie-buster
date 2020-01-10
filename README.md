@@ -4,7 +4,7 @@
 
 # Movie-buster
 
-This API is built in NestJS framework with Typescript. It allows to handle a movie store. You can handle users, movies with functions such as like, rent, rentur and buy. You can also handle two type of users, client and admin.
+This API is built in NestJS framework with Typescript. It allows to handle a movie store. You can handle users, movies with functions such as like, rent, return and buy. You can also handle two type of users, client and admin.
 
 ## First steps
 
@@ -17,7 +17,7 @@ This API is built in NestJS framework with Typescript. It allows to handle a mov
 
 - endpoint for login is authentication/login
 - payload for login is {email:string,password:string}
-- it is setted a default admin, its credentials {email:'admin@admin.com, password: 'admin@buster'}
+- it is setted a default admin, its credentials {email:'admin@admin.com', password: 'admin@buster'}
 
 ## Environment variables required
 
