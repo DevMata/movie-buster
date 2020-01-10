@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { Movie } from './entities/movie.entity';
 import { MovieRepository } from './repositories/movie.repository';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -27,8 +31,8 @@ export class MoviesService {
   async createMovie(createMovieDto: CreateMovieDto): Promise<Movie> {
     await this.movieRepository.findMovieByTitle(createMovieDto.title);
 
-    let tags: Tag[] = [];
-    if (createMovieDto.tags) {
+    let tags: Array<Tag> = [];
+    if (createMovieDto.tags.length) {
       tags = await this.tagsService.createTags({ tags: createMovieDto.tags });
     }
 
@@ -37,8 +41,35 @@ export class MoviesService {
     return this.movieRepository.save(movie);
   }
 
-  updateMovie(movieId: string, updateMovieDto: UpdateMovieDto): Promise<Movie> {
-    return this.movieRepository.updateMovie(movieId, updateMovieDto);
+  async updateMovie(
+    movieId: string,
+    updateMovieDto: UpdateMovieDto,
+  ): Promise<Movie> {
+    const movie = await this.movieRepository.findOne(movieId);
+    if (!movie) throw new NotFoundException('movie not found');
+
+    const { tags, ...properties } = updateMovieDto;
+
+    if (properties.title) {
+      const searchedByTitle = await this.movieRepository.findOne({
+        title: updateMovieDto.title,
+      });
+      if (searchedByTitle && searchedByTitle.movieId !== movie.movieId) {
+        throw new ConflictException('other movie already has that title');
+      }
+    }
+
+    if (tags && tags.length) {
+      const updatedTags = await this.tagsService.createTags({ tags: tags });
+
+      return this.movieRepository.save({
+        ...movie,
+        ...properties,
+        tags: updatedTags,
+      });
+    }
+
+    return this.movieRepository.save({ ...movie, ...properties });
   }
 
   async likeMovie(userPayload: UserPayload, movieId: string): Promise<void> {
