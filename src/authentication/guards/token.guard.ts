@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from '../dto/token-payload.dto';
+import { getBearer } from '../services/token.helper';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
@@ -23,9 +24,9 @@ export class TokenGuard implements CanActivate {
     try {
       const req: Request = context.switchToHttp().getRequest();
 
-      const bearer = req.headers.authorization.split(' ')[1];
-
-      const tokenPayload: TokenPayload = this.jwtService.verify(bearer);
+      const tokenPayload = this.jwtService.decode(
+        getBearer(req),
+      ) as TokenPayload;
 
       const res = await this.tokenRepository.findOne({ jti: tokenPayload.jti });
 
