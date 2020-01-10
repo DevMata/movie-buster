@@ -14,7 +14,7 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
     forwardRef(() => AuthenticationModule),
   ],
   providers: [UsersService, HashHelper],
-  exports: [UsersService, TypeOrmModule, HashHelper],
+  exports: [UsersService, TypeOrmModule, HashHelper, AuthenticationModule],
   controllers: [UsersController],
 })
 export class UsersModule {}
