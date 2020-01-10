@@ -6,7 +6,10 @@ import { UserPayload } from '../dto/user-payload.dto';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AccessToken } from '../entities/token.entity';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
+import { Request } from 'express';
+import { TokenPayload } from '../dto/token-payload.dto';
+import { getBearer } from './token.helper';
 
 @Injectable()
 export class AuthenticationService {
@@ -37,5 +40,11 @@ export class AuthenticationService {
         jwtid: jti,
       }),
     };
+  }
+
+  async logout(req: Request): Promise<DeleteResult> {
+    const token = this.jwtService.decode(getBearer(req)) as TokenPayload;
+
+    return this.tokenRepository.delete({ userId: token.sub, jti: token.jti });
   }
 }
