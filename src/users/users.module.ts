@@ -6,14 +6,16 @@ import { HashHelper } from './services/hash.helper';
 import { UsersController } from './users.controller';
 import { RolesModule } from 'src/roles/roles.module';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
+import { RentedMoviesService } from './services/rented-movies.service';
+import { Rent } from 'src/rents/entities/rent.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserRepository]),
+    TypeOrmModule.forFeature([UserRepository, Rent]),
     RolesModule,
     forwardRef(() => AuthenticationModule),
   ],
-  providers: [UsersService, HashHelper],
+  providers: [UsersService, HashHelper, RentedMoviesService],
   exports: [UsersService, TypeOrmModule, HashHelper, AuthenticationModule],
   controllers: [UsersController],
 })
