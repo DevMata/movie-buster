@@ -11,6 +11,7 @@ import {
 import { Tag } from 'src/tags/entities/tag.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Rent } from 'src/rents/entities/rent.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 @Entity()
 export class Movie {
@@ -62,4 +63,10 @@ export class Movie {
     rent => rent.movie,
   )
   rents!: Rent[];
+
+  @OneToMany(
+    () => Order,
+    order => order.movie,
+  )
+  orders!: Order[];
 }
