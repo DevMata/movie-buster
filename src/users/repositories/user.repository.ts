@@ -49,8 +49,14 @@ export class UserRepository extends Repository<User> {
     updateUserDto: UpdateUserDto,
   ): Promise<User> {
     const user = await this.findOne(userId);
-
     if (!user) throw new NotFoundException('user not found');
+
+    if (updateUserDto.email) {
+      const res = await this.findOne({ email: updateUserDto.email });
+      if (res) {
+        throw new ConflictException('email is already used by other user');
+      }
+    }
 
     return this.save({ ...user, ...updateUserDto });
   }
