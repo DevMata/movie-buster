@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
@@ -18,6 +20,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { TokenGuard } from 'src/authentication/guards/token.guard';
 import { Roles } from 'src/authentication/decorators/role.decorator';
 import { RoleGuard } from 'src/authentication/guards/role.guard';
+import { SerializedUser } from 'src/users/dto/user.serialize';
 
 @Controller('movies')
 export class MoviesController {
@@ -55,5 +58,11 @@ export class MoviesController {
     @LoggedUser() user: UserPayload,
   ): void {
     this.moviesService.likeMovie(user, movieIdDto.movieId);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':movieId/fans')
+  getFanUsers(@Param() movieIdDto: MovieIdDto): Promise<Array<SerializedUser>> {
+    return this.moviesService.getFanUsers(movieIdDto.movieId);
   }
 }
