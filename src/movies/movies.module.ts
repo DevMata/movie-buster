@@ -16,5 +16,6 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
   ],
   providers: [MoviesService],
   controllers: [MoviesController],
+  exports: [TypeOrmModule],
 })
 export class MoviesModule {}
