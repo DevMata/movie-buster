@@ -13,7 +13,7 @@ export class Order {
   orderId: string;
 
   @CreateDateColumn()
-  buyedAt: Date;
+  boughtAt: Date;
 
   @ManyToOne(
     () => User,
