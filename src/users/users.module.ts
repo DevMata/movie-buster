@@ -8,6 +8,7 @@ import { RolesModule } from 'src/roles/roles.module';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { RentedMoviesService } from './services/rented-movies.service';
 import { Rent } from 'src/rents/entities/rent.entity';
+import { LikedMoviesService } from './services/liked-movies.service';
 
 @Module({
   imports: [
@@ -15,7 +16,12 @@ import { Rent } from 'src/rents/entities/rent.entity';
     RolesModule,
     forwardRef(() => AuthenticationModule),
   ],
-  providers: [UsersService, HashHelper, RentedMoviesService],
+  providers: [
+    UsersService,
+    HashHelper,
+    RentedMoviesService,
+    LikedMoviesService,
+  ],
   exports: [UsersService, TypeOrmModule, HashHelper, AuthenticationModule],
   controllers: [UsersController],
 })
