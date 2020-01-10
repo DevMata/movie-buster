@@ -40,7 +40,10 @@ export class User {
   )
   role: Role;
 
-  @ManyToMany(() => Movie)
+  @ManyToMany(
+    () => Movie,
+    movie => movie.users,
+  )
   @JoinTable({ name: 'like' })
   movies: Movie[];
 }
