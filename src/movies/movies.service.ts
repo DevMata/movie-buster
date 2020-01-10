@@ -11,6 +11,7 @@ import { Tag } from 'src/tags/entities/tag.entity';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { UserPayload } from 'src/authentication/dto/user-payload.dto';
 import { UserRepository } from 'src/users/repositories/user.repository';
+import { SerializedUser } from 'src/users/dto/user.serialize';
 
 @Injectable()
 export class MoviesService {
@@ -94,5 +95,16 @@ export class MoviesService {
         movies: [...movies, updatedMovie],
       });
     }
+  }
+
+  async getFanUsers(movieId: string): Promise<Array<SerializedUser>> {
+    const movie = await this.movieRepository.findOne(movieId, {
+      relations: ['users'],
+    });
+    if (!movie) {
+      throw new NotFoundException('movie not found');
+    }
+
+    return movie.users.map(user => new SerializedUser(user));
   }
 }
