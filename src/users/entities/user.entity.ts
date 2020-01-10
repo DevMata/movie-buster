@@ -7,9 +7,11 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Role } from 'src/roles/entities/role.entity';
 import { Movie } from 'src/movies/entities/movie.entity';
+import { Rent } from 'src/rents/entities/rent.entity';
 
 @Entity()
 export class User {
@@ -46,4 +48,10 @@ export class User {
   )
   @JoinTable({ name: 'like' })
   movies: Movie[];
+
+  @OneToMany(
+    () => Rent,
+    rent => rent.user,
+  )
+  rents!: Rent[];
 }
