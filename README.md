@@ -16,7 +16,8 @@ This API is built in NestJS framework with Typescript. It allows to handle a mov
 ## Usage
 
 - endpoint for login is authentication/login
-- payload for login is {username:string,password:string}
+- payload for login is {email:string,password:string}
+- it is setted a default admin, its credentials {email:'admin@admin.com, password: 'admin@buster'}
 
 ## Environment variables required
 
