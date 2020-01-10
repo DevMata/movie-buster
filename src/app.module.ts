@@ -8,6 +8,7 @@ import { RolesModule } from './roles/roles.module';
 import { MoviesModule } from './movies/movies.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { SeedModule } from './seed/seed.module';
+import { RentsModule } from './rents/rents.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SeedModule } from './seed/seed.module';
     MoviesModule,
     AuthenticationModule,
     SeedModule,
+    RentsModule,
   ],
 })
 export class AppModule {}
