@@ -78,7 +78,9 @@ export class MoviesService {
 
     const numLikes = movie.likes;
 
-    const user = await this.userRepository.findOne(userPayload.userId);
+    const user = await this.userRepository.findOne(userPayload.userId, {
+      relations: ['movies'],
+    });
     const movies = user.movies;
 
     if (!movies.map(movie => movie.movieId).includes(movie.movieId)) {
