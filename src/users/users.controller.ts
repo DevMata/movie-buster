@@ -17,10 +17,18 @@ import { AuthGuard } from '@nestjs/passport';
 import { TokenGuard } from 'src/authentication/guards/token.guard';
 import { RoleGuard } from 'src/authentication/guards/role.guard';
 import { Roles } from 'src/authentication/decorators/role.decorator';
+import { RentedMoviesService } from './services/rented-movies.service';
+import { Rent } from 'src/rents/entities/rent.entity';
+import { LikedMoviesService } from './services/liked-movies.service';
+import { Movie } from 'src/movies/entities/movie.entity';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly rentedMoviesService: RentedMoviesService,
+    private readonly likedMoviesService: LikedMoviesService,
+  ) {}
 
   @Post()
   createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -53,5 +61,17 @@ export class UsersController {
     @Body() changeRoleDto: ChangeRoleDto,
   ): Promise<User> {
     return this.usersService.changeRole(userIdDto.userId, changeRoleDto.role);
+  }
+
+  @Get(':userId/rents')
+  @UseGuards(AuthGuard('jwt'))
+  getRentedMovies(@Param() userIdDto: UserIdDto): Promise<Array<Rent>> {
+    return this.rentedMoviesService.getRentedMovies(userIdDto.userId);
+  }
+
+  @Get(':userId/likes')
+  @UseGuards(AuthGuard('jwt'))
+  getLikedMovies(@Param() userIdDto: UserIdDto): Promise<Array<Movie>> {
+    return this.likedMoviesService.getLikedMovies(userIdDto.userId);
   }
 }
