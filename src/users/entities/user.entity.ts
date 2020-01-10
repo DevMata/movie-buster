@@ -12,6 +12,7 @@ import {
 import { Role } from 'src/roles/entities/role.entity';
 import { Movie } from 'src/movies/entities/movie.entity';
 import { Rent } from 'src/rents/entities/rent.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 @Entity()
 export class User {
@@ -54,4 +55,10 @@ export class User {
     rent => rent.user,
   )
   rents!: Rent[];
+
+  @OneToMany(
+    () => Order,
+    order => order.user,
+  )
+  orders!: Order[];
 }
