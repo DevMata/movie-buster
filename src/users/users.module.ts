@@ -9,10 +9,12 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { RentedMoviesService } from './services/rented-movies.service';
 import { Rent } from 'src/rents/entities/rent.entity';
 import { LikedMoviesService } from './services/liked-movies.service';
+import { Order } from 'src/orders/entities/order.entity';
+import { BoughtMoviesService } from './services/bought-movies.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserRepository, Rent]),
+    TypeOrmModule.forFeature([UserRepository, Rent, Order]),
     RolesModule,
     forwardRef(() => AuthenticationModule),
   ],
@@ -21,6 +23,7 @@ import { LikedMoviesService } from './services/liked-movies.service';
     HashHelper,
     RentedMoviesService,
     LikedMoviesService,
+    BoughtMoviesService,
   ],
   exports: [UsersService, TypeOrmModule, HashHelper, AuthenticationModule],
   controllers: [UsersController],

@@ -21,6 +21,8 @@ import { RentedMoviesService } from './services/rented-movies.service';
 import { Rent } from 'src/rents/entities/rent.entity';
 import { LikedMoviesService } from './services/liked-movies.service';
 import { Movie } from 'src/movies/entities/movie.entity';
+import { BoughtMoviesService } from './services/bought-movies.service';
+import { Order } from 'src/orders/entities/order.entity';
 
 @Controller('users')
 export class UsersController {
@@ -28,6 +30,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly rentedMoviesService: RentedMoviesService,
     private readonly likedMoviesService: LikedMoviesService,
+    private readonly boughtMoviesService: BoughtMoviesService,
   ) {}
 
   @Post()
@@ -73,5 +76,11 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   getLikedMovies(@Param() userIdDto: UserIdDto): Promise<Array<Movie>> {
     return this.likedMoviesService.getLikedMovies(userIdDto.userId);
+  }
+
+  @Get(':userId/orders')
+  @UseGuards(AuthGuard('jwt'))
+  getBoughtMovies(@Param() userIdDto: UserIdDto): Promise<Array<Order>> {
+    return this.boughtMoviesService.getBoughtMovies(userIdDto.userId);
   }
 }
