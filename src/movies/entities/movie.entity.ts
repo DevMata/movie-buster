@@ -8,10 +8,10 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Tag } from 'src/tags/entities/tag.entity';
-import { User } from 'src/users/entities/user.entity';
-import { Rent } from 'src/rents/entities/rent.entity';
-import { Order } from 'src/orders/entities/order.entity';
+import { Tag } from '../../tags/entities/tag.entity';
+import { User } from '../../users/entities/user.entity';
+import { Rent } from '../../rents/entities/rent.entity';
+import { Order } from '../../orders/entities/order.entity';
 
 @Entity()
 export class Movie {

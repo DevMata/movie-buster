@@ -4,8 +4,8 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
-import { Movie } from 'src/movies/entities/movie.entity';
+import { User } from '../../users/entities/user.entity';
+import { Movie } from '../../movies/entities/movie.entity';
 
 @Entity()
 export class Order {
