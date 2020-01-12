@@ -6,8 +6,8 @@ import {
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from 'src/users/repositories/user.repository';
-import { MovieRepository } from 'src/movies/repositories/movie.repository';
+import { UserRepository } from '../users/repositories/user.repository';
+import { MovieRepository } from '../movies/repositories/movie.repository';
 
 @Injectable()
 export class OrdersService {

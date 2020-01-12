@@ -7,8 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Rent } from './entities/rent.entity';
 import { Repository, UpdateResult } from 'typeorm';
-import { UserRepository } from 'src/users/repositories/user.repository';
-import { MovieRepository } from 'src/movies/repositories/movie.repository';
+import { UserRepository } from '../users/repositories/user.repository';
+import { MovieRepository } from '../movies/repositories/movie.repository';
 
 @Injectable()
 export class RentsService {

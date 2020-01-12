@@ -1,16 +1,23 @@
+/* eslint-disable */
+
 import { Test } from '@nestjs/testing';
 import { TagsService } from './tags.service';
 import { TagRepository } from './repositories/tag.repository';
+import { CreateTagDto } from './dto/create-tag.dto';
+
+const mocktagdto: CreateTagDto = { name: 'something' };
 
 const mockTagRepository = () => ({
   getTags: jest.fn(),
   findTagById: jest.fn(),
   findTagByName: jest.fn(),
+  createTag: jest.fn(),
+  createMultipleTags: jest.fn(),
 });
 
 describe('TagsService', () => {
-  let tagsService: TagsService;
-  let tagRepository: TagRepository;
+  let tagsService;
+  let tagRepository;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -51,6 +58,32 @@ describe('TagsService', () => {
       tagRepository.findTagByName('asasa');
 
       expect(tagRepository.findTagByName).toHaveBeenCalled();
+    });
+  });
+
+  describe('create tag', () => {
+    it('create a tag', async () => {
+      (tagRepository.createTag as jest.Mock).mockResolvedValue('some value');
+      expect(tagRepository.createTag).not.toHaveBeenCalled();
+
+      const res = await tagRepository.createTag(mocktagdto);
+
+      expect(tagRepository.createTag).toHaveBeenCalled();
+      expect(res).toEqual('some value');
+    });
+  });
+
+  describe('create multiple tags', () => {
+    it('create multiple tags', async () => {
+      (tagRepository.createMultipleTags as jest.Mock).mockResolvedValue(
+        'some value',
+      );
+      expect(tagRepository.createMultipleTags).not.toHaveBeenCalled();
+
+      const res = await tagRepository.createMultipleTags(['horror', 'scifi']);
+
+      expect(tagRepository.createMultipleTags).toHaveBeenCalled();
+      expect(res).toEqual('some value');
     });
   });
 });
