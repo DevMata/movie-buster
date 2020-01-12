@@ -1,8 +1,8 @@
 import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { AuthGuard } from '@nestjs/passport';
-import { LoggedUser } from 'src/users/decorators/user.decorator';
-import { UserPayload } from 'src/authentication/dto/user-payload.dto';
+import { LoggedUser } from '../users/decorators/user.decorator';
+import { UserPayload } from '../authentication/dto/user-payload.dto';
 import { OrderDto } from './dto/order.dto';
 
 @Controller('orders')
